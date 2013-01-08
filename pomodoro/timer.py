@@ -3,6 +3,7 @@ import time
 
 LABEL_MARKUP = "<span font_desc=\"64.0\">%02i:%02i</span>"
 
+
 class Timer(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
@@ -14,26 +15,25 @@ class Timer(Gtk.Box):
         center.pack_start(self.time_label, True, True, 0)
         self.pack_start(center, True, True, 0)
         self.timeout_id = None
+        self.short_break_total_seconds = 0.25 * 60
+        self.long_break_total_seconds = 15 * 60
+        self.pomodoro_total_seconds = 25 * 60
+        self.current_state = None
 
     def pomodoro(self):
-        if self.timeout_id:
-            GObject.source_remove(self.timeout_id)
-        self.time_label.set_markup(LABEL_MARKUP % (25, 0))
-        self.time = 25 * 60
-        self.timeout_id = GObject.timeout_add(1000, self.count_down)
-        
+        self._start_common(self.pomodoro_total_seconds)
+
     def short_break(self):
-        if self.timeout_id:
-            GObject.source_remove(self.timeout_id)
-        self.time_label.set_markup(LABEL_MARKUP % (5, 0))
-        self.time = 5 * 60
-        self.timeout_id = GObject.timeout_add(1000, self.count_down)
-        
+        self._start_common(self.short_break_total_seconds)
+
     def long_break(self):
+        self._start_common(self.long_break_total_seconds)
+
+    def _start_common(self, duration):
         if self.timeout_id:
             GObject.source_remove(self.timeout_id)
-        self.time_label.set_markup(LABEL_MARKUP % (15, 0))
-        self.time = 15 * 60
+        self.time_label.set_markup(LABEL_MARKUP % divmod(duration, 60))
+        self.time = duration
         self.timeout_id = GObject.timeout_add(1000, self.count_down)
 
     def count_down(self):
