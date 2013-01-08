@@ -21,23 +21,17 @@ class Window(Gtk.ApplicationWindow):
                                         Gtk.STYLE_PROVIDER_PRIORITY_USER)
 
         self.box = box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.notebook = notebook = Gtk.Notebook()        
         self.toolbar = toolbar = Toolbar()
 
         self.box.pack_start(toolbar, False, False, 0)
-        self.box.pack_start(notebook, True, True, 0)
         self.add(box)
-        
-        notebook.set_show_border(False)
-        notebook.set_show_tabs(False)
 
         eventbox = Gtk.EventBox()
-        eventbox.get_style_context().add_class('white-bg')
         self.timer = timer = Timer()
+        eventbox.get_style_context().add_class('white-bg')
         eventbox.add(timer)
-        notebook.append_page(eventbox, Gtk.Label('Timer'))
-        notebook.set_current_page(-1)
-        
+        self.box.pack_start(eventbox, True, True, 0)
+
         self.show_all()
         eventbox.grab_focus()
         
