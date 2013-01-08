@@ -7,23 +7,12 @@ class Timer(Gtk.Box):
     def __init__(self):
         Gtk.Box.__init__(self)
         self.set_orientation(Gtk.Orientation.VERTICAL)
-        self.time_label = time_label = Gtk.Label('')
+        self.time_label = Gtk.Label('')
+        self.time_label.set_markup(LABEL_MARKUP % (0, 0))
         self.time = 0
-        self.alert = Alert()
-        upper_space = Gtk.Label('')
-        bottom_space = Gtk.Label('')        
-        right_space = Gtk.Label('')
-        left_space = Gtk.Label('')
         center = Gtk.Box()
-        center.pack_start(left_space, True, True, 0)
-        center.pack_start(time_label, True, True, 0)
-        center.pack_start(right_space, True, True, 0)
-        self.pack_start(upper_space, False, True, 24)
+        center.pack_start(self.time_label, True, True, 0)
         self.pack_start(center, True, True, 0)
-        self.pack_start(bottom_space, True, True, 0)
-        
-        time_label.set_markup(LABEL_MARKUP % (0, 0))
-        
         self.timeout_id = None
 
     def pomodoro(self):
