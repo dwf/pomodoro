@@ -1,7 +1,12 @@
 from gi.repository import Gtk, GObject, Notify
-import time
+
 
 LABEL_MARKUP = "<span font_desc=\"64.0\">%02i:%02i</span>"
+NOTIFY_STRINGS = ["Pomodoro", "Short break", "Long break"]
+STATE_POMODORO, STATE_SHORT, STATE_LONG = range(3)
+
+
+Notify.init('Pomodoro+')
 
 
 class Timer(Gtk.Box):
@@ -21,12 +26,15 @@ class Timer(Gtk.Box):
         self.current_state = None
 
     def pomodoro(self):
+        self.current_state = STATE_POMODORO
         self._start_common(self.pomodoro_total_seconds)
 
     def short_break(self):
+        self.current_state = STATE_SHORT
         self._start_common(self.short_break_total_seconds)
 
     def long_break(self):
+        self.current_state = STATE_LONG
         self._start_common(self.long_break_total_seconds)
 
     def _start_common(self, duration):
@@ -41,6 +49,10 @@ class Timer(Gtk.Box):
             GObject.source_remove(self.timeout_id)
             window = self.get_parent().get_parent().get_parent()
             window.set_urgency_hint(True)
+            n = Notify.Notification.new('Pomodoro', 'Ding! %s over!' %
+                                        NOTIFY_STRINGS[self.current_state],
+                                        None)
+            n.show()
             return False
         else:
             self.time -= 1
@@ -53,14 +65,3 @@ class Timer(Gtk.Box):
         if self.timeout_id:
             GObject.source_remove(self.timeout_id)
         self.time_label.set_markup(LABEL_MARKUP % (0, 0))
-
-class Alert():
-    def __init__(self):
-        Notify.init('Pomodoro')
-        self.n = Notify.Notification.new('Pomodoro', 'Ding !', None)
-        
-    def show(self):
-        self.n.show()
-        time.sleep(15)
-        #Notify.uninit()
-        self.n.close()
