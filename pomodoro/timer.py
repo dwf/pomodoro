@@ -45,7 +45,7 @@ class Timer(Gtk.Box):
         else:
             self.time -= 1
             m, s = divmod(self.time, 60)
-            h, m = divmod(m, 60)        
+            h, m = divmod(m, 60)
             self.time_label.set_markup(LABEL_MARKUP % (m, s))
         return True
 
