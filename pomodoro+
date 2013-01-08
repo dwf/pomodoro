@@ -1,4 +1,4 @@
-#! /usr/bin/env python 
+#!/usr/bin/python
 from pomodoro.app import App
 import sys
 
