@@ -8,7 +8,7 @@ class Window(Gtk.ApplicationWindow):
         Gtk.ApplicationWindow.__init__(self, title="Pomodoro+",
                                       application=app,
                                       hide_titlebar_when_maximized=True)
-        self.set_default_size(680, 460)
+        self.set_default_size(340, 50)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_icon_from_file(self.get_icon_path())
 
@@ -60,7 +60,7 @@ class Toolbar(Gtk.Toolbar):
     def __init__(self):
         Gtk.Toolbar.__init__(self)
         self.get_style_context().add_class('menubar')
-        self.set_size_request(-1, 42)
+        self.set_size_request(340, 42)
         self.set_can_focus(False)
 
         empty = Gtk.ToolItem()
