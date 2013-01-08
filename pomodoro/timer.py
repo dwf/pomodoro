@@ -1,4 +1,4 @@
-from gi.repository import Gtk, Gio, GObject, Notify
+from gi.repository import Gtk, GObject, Notify
 import time
 
 LABEL_MARKUP = "<span font_desc=\"64.0\">%02i:%02i</span>"

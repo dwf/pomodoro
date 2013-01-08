@@ -1,4 +1,4 @@
-from gi.repository import Gtk, Gio, Gdk
+from gi.repository import Gtk, Gdk
 from timer import Timer
 from logger import Logger
 import os
