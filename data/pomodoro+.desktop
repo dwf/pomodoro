@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Pomodoro+
+Exec=pomodoro+
+Type=Application
+Version=1.0
+Comment=Pomodoro Timer
+GenericName=Pomdoro+
+Terminal=false
+Categories=GNOME;GTK;Utility;Development;
+Icon=/usr/share/icons/hicolor/scalable/apps/pomodoro.png
+

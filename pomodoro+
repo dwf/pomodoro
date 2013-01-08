@@ -1,0 +1,8 @@
+#! /usr/bin/env python 
+from pomodoro.app import App
+import sys
+
+
+if __name__ == '__main__':
+    p = App()
+    sys.exit(p.run(sys.argv))
