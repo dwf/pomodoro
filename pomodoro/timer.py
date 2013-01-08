@@ -46,7 +46,7 @@ class Timer(Gtk.Box):
         self.time_label.set_markup(LABEL_MARKUP % (15, 0))
         self.time = 15 * 60
         self.timeout_id = GObject.timeout_add(1000, self.count_down)
-        
+
     def count_down(self):
         if self.time == 0:
             GObject.source_remove(self.timeout_id)
@@ -58,7 +58,7 @@ class Timer(Gtk.Box):
             h, m = divmod(m, 60)        
             self.time_label.set_markup(LABEL_MARKUP % (m, s))
         return True
-    
+
     def clear(self):
         if self.timeout_id:
             GObject.source_remove(self.timeout_id)

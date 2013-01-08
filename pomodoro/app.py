@@ -2,6 +2,7 @@ from gi.repository import Gtk, Gdk
 from timer import Timer
 import os
 
+
 class Window(Gtk.ApplicationWindow):
     def __init__(self, app):
         Gtk.ApplicationWindow.__init__(self, title="Pomodoro+",
@@ -10,19 +11,19 @@ class Window(Gtk.ApplicationWindow):
         self.set_default_size(680, 460)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_icon_from_file(self.get_icon_path())
-        
+
         css = Gtk.CssProvider()
         css.load_from_path(self.get_css_file())
-        
+
         context = Gtk.StyleContext()
         context.add_provider_for_screen(Gdk.Screen.get_default(),
                                         css,
                                         Gtk.STYLE_PROVIDER_PRIORITY_USER)
-        
+
         self.box = box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.notebook = notebook = Gtk.Notebook()        
         self.toolbar = toolbar = Toolbar()
-        
+
         self.box.pack_start(toolbar, False, False, 0)
         self.box.pack_start(notebook, True, True, 0)
         self.add(box)
@@ -46,7 +47,7 @@ class Window(Gtk.ApplicationWindow):
             return path
         else:
             return '/usr/share/icons/hicolor/scalable/apps/pomodoro+.png'
-            
+
     def get_css_file(self):
         path = os.getcwd()+'/data/gtk-style.css'
         if os.path.exists(path):
@@ -54,20 +55,20 @@ class Window(Gtk.ApplicationWindow):
         else:
             return '/usr/share/pomodoro+/gtk-style.css'
 
-        
+
 class Toolbar(Gtk.Toolbar):
     def __init__(self):
         Gtk.Toolbar.__init__(self)
         self.get_style_context().add_class('menubar')
         self.set_size_request(-1, 42)
         self.set_can_focus(False)
-        
+
         empty = Gtk.ToolItem()
-        
-        
+
+
         spacer = Gtk.ToolItem()
         spacer.set_expand(True)
-                          
+
         center = Gtk.Box()
         #center.get_style_context().add_class('linked')
         pomodoro = Gtk.Button('Pomodoro')
@@ -91,21 +92,21 @@ class Toolbar(Gtk.Toolbar):
         center.pack_start(longbreak, False, False, 6)
         center_item = Gtk.ToolItem()
         center_item.add(center)
-        
+
         spacer2 = Gtk.ToolItem()
         spacer2.set_expand(True)
-        
+
         clear = Gtk.ToolButton()
         clear.get_style_context().add_class('silver')
         clear.set_label('Clear')
         clear.set_can_focus(False)
-        
+
         self.insert(empty, -1)
         self.insert(spacer, -1)
         self.insert(center_item, -1)
-        self.insert(spacer2, -1)        
-        self.insert(clear, -1)        
-        
+        self.insert(spacer2, -1)
+        self.insert(clear, -1)
+
         pomodoro.connect('clicked', self.on_pomodoro)
         shortbreak.connect('clicked', self.on_short_break)
         longbreak.connect('clicked', self.on_long_break)
@@ -114,23 +115,24 @@ class Toolbar(Gtk.Toolbar):
     def on_pomodoro(self, btn):
         window = self.get_parent().get_parent()
         window.timer.pomodoro()
-                        
+
     def on_short_break(self, btn):
         window = self.get_parent().get_parent()
         window.timer.short_break()
-        
+
     def on_long_break(self, btn):
         window = self.get_parent().get_parent()
         window.timer.long_break()
-        
+
     def on_clear(self, btn):
         window = self.get_parent().get_parent()
         window.timer.clear()
-        
+
+
 class App(Gtk.Application):
     def __init__(self):
         Gtk.Application.__init__(self)
-        
+
     def do_activate(self):
         win = Window(self)
         win.present()
