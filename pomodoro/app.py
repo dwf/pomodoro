@@ -34,7 +34,13 @@ class Window(Gtk.ApplicationWindow):
 
         self.show_all()
         eventbox.grab_focus()
-        
+        self.connect("map-event", self.on_focus)
+        self.connect("focus-in-event", self.on_focus)
+
+    def on_focus(self, window, widget):
+        window.set_urgency_hint(False)
+        return True
+
     def get_icon_path(self):
         path = os.getcwd()+'/data/pomodoro+.png'
         if os.path.exists(path):

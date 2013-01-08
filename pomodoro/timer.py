@@ -39,7 +39,8 @@ class Timer(Gtk.Box):
     def count_down(self):
         if self.time == 0:
             GObject.source_remove(self.timeout_id)
-            #self.alert.show()
+            window = self.get_parent().get_parent().get_parent()
+            window.set_urgency_hint(True)
             return False
         else:
             self.time -= 1
